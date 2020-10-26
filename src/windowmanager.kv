@@ -1,0 +1,148 @@
+<RegisterWindow>:
+    id: register_window
+    orientation: "vertical"
+    tiUsername: username
+    tiPassword: password
+    tiEmail: email
+    tiConfirmPassword: confirm_password
+    spacing: 10
+    padding: 150
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        orientation: "vertical"
+        Label:
+            text: "Let's register"
+            bold: True
+            font_size: 32
+    BoxLayout:
+        orientation: "vertical"
+        height: "40dp"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: username
+            hint_text: "Username"
+            multiline: False
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: email
+            hint_text: "Email Address"
+            multiline: False
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: password
+            hint_text: "Password"
+            multiline: False
+            password: True
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: confirm_password
+            hint_text: "Confirm Password"
+            multiline: False
+            password: True
+    BoxLayout:
+        pos: self.parent.pos
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Register"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+            #on_press: root.submit()
+            on_release:
+                app.switchScreenProfile()
+
+<RegisterScreen>:
+    name: "register_screen"
+    RegisterWindow:
+
+<LoginWindow>:
+    id: login_window
+    orientation: "vertical"
+    tiUsername: username
+    tiPassword: password
+    spacing: 10
+    padding: 150
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        orientation: "vertical"
+        Label:
+            text: "Welcome"
+            bold: True
+            font_size: 32
+    BoxLayout:
+        orientation: "vertical"
+        height: "40dp"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: username
+            hint_text: "Username"
+            multiline: False
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        TextInput:
+            id: password
+            hint_text: "Password"
+            multiline: False
+            password: True
+    BoxLayout:
+        pos: self.parent.pos
+        orientation: "vertical"
+        size_hint_y: None
+        height: "40dp"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Login"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+    BoxLayout:
+
+        orientation: "vertical"
+        height: "40dp"
+        MyLabel:
+            text: "Don't have an account? Create one now!"
+            on_double_press: app.switchScreenProfile
+
+<LoginScreen>:
+    name: "login_screen"
+    LoginWindow:
+
+<ProfileWindow>:
+    orientation: "vertical"
+
+
+<ProfileScreen>:
+    name: "profile_screen"
+    ProfileWindow:
