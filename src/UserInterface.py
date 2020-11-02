@@ -23,8 +23,10 @@ class TeachYourselfApp(App):
         return self.screenManager
 
     def switchScreenProfile(self):
-        self.screenManager.switch_to(self.loginScreen)
+        self.screenManager.switch_to(self.profileScreen)
 
     def switchScreenLogin(self):
-        self.screenManager.switch_to(self.profileScreen)
+        self.screenManager.switch_to(self.loginScreen)
+
+
 
