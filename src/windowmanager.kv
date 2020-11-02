@@ -139,10 +139,60 @@
     name: "login_screen"
     LoginWindow:
 
-<ProfileWindow>:
+<SelectWindow>:
     orientation: "vertical"
+    #tiCourses: courses
+    #tiAge: age
+    spacing: 10
+    padding: 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: 0.2
+        Label:
+            text: "Let's get started"
+            font_size: 20
+            pos_hint: {'center_x': 0.5}
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Choose from our courses"
+            font_size: 20
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Choose"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Choose from our courses"
+            font_size: 20
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Add"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+            #on_release:
 
 
-<ProfileScreen>:
+
+
+
+
+
+
+
+<SelectScreen>:
     name: "profile_screen"
-    ProfileWindow:
+    SelectWindow:
