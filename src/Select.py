@@ -10,13 +10,13 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-class ProfileWindow(BoxLayout):
+class SelectWindow(BoxLayout):
     tiAge = ObjectProperty()
     tiCourses = ObjectProperty()
     tiGender = ObjectProperty()
 
 
 
-class ProfileScreen(Screen):
+class SelectScreen(Screen):
     pass
 
