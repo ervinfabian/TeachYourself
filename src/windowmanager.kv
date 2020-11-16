@@ -1,5 +1,13 @@
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 <RegisterWindow>:
-    id: register_window
     orientation: "vertical"
     tiUsername: username
     tiPassword: password
@@ -28,6 +36,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: username
             hint_text: "Username"
             multiline: False
@@ -36,6 +45,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: email
             hint_text: "Email Address"
             multiline: False
@@ -44,6 +54,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: password
             hint_text: "Password"
             multiline: False
@@ -53,6 +64,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: confirm_password
             hint_text: "Confirm Password"
             multiline: False
@@ -70,11 +82,12 @@
             size_hint: .2, .1
             #on_press: root.submit()
             on_release:
-                app.switchScreenProfile()
+                app.switchScreenSelect()
 
 <RegisterScreen>:
     name: "register_screen"
     RegisterWindow:
+        id: reg
 
 <LoginWindow>:
     id: login_window
@@ -104,6 +117,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: username
             hint_text: "Username"
             multiline: False
@@ -112,6 +126,7 @@
         size_hint_y: None
         height: "40dp"
         TextInput:
+            input_filter: 'string'
             id: password
             hint_text: "Password"
             multiline: False
@@ -127,19 +142,20 @@
             font_size: 20
             background_color: 0,0,1,1
             size_hint: .2, .1
+            on_release: app.switchScreenHome()
     BoxLayout:
-
         orientation: "vertical"
         height: "40dp"
-        MyLabel:
+        SelectableLabel:
             text: "Don't have an account? Create one now!"
-            on_double_press: app.switchScreenProfile
+            #select_with_touch:
 
 <LoginScreen>:
     name: "login_screen"
     LoginWindow:
 
 <SelectWindow>:
+    id: select_window
     orientation: "vertical"
     #tiCourses: courses
     #tiAge: age
@@ -173,7 +189,7 @@
     BoxLayout:
         orientation: "vertical"
         Label:
-            text: "Choose from our courses"
+            text: "Add a new course"
             font_size: 20
     BoxLayout:
         orientation: "vertical"
@@ -185,14 +201,152 @@
             size_hint: .2, .1
             #on_release:
 
-
-
-
-
-
-
-
-
 <SelectScreen>:
     name: "profile_screen"
     SelectWindow:
+
+<LoadingWindow>:
+    id: loading_window
+    orientation: "vertical"
+    spacing: 10
+    padding: 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "Welcome to"
+                bold: True
+                font_size: 32
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "TeachYourself"
+                font_size: 32
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "Contact us at: 937636703694"
+                font_size: 12
+
+<LoadingScreen>:
+    name: "loading_screen"
+    #on_start: app.switch()
+    LoadingWindow:
+
+
+
+<ClassesList>:
+    orientation: "vertical"
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        spacing: 10
+        padding: 80
+        pos_hint: {'center_x': 0.5}
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+
+<ClassesWindow>:
+    id: classes_window
+    orientation: "vertical"
+    spacing: 10
+    padding: 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        size_hint_y: None
+        height: "20dp"
+        Label:
+            text: "Choose classes"
+            bold: True
+            font_size: 32
+    BoxLayout:
+        size_hint_y: None
+        height: "20dp"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Add them to your archive"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+    ClassesList:
+
+<ClassesScreen>:
+    name: "classes_screen"
+    ClassesWindow:
+
+<HomeList>:
+    orientation: "vertical"
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        spacing: 10
+        padding: 80
+        pos_hint: {'center_x': 0.5}
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+<HomeWindow>:
+    id: home_window
+    orientation: "vertical"
+    spacing: 10
+    padding: 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/batman.jpg"
+    BoxLayout:
+        size_hint_y: None
+        height: "20dp"
+        Label:
+            text: "Your classes"
+            bold: True
+            font_size: 32
+    BoxLayout:
+        size_hint_y: None
+        height: "20dp"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Learn it"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+    HomeList:
+
+<HomeScreen>:
+    name: "Home_screen"
+    HomeWindow:
