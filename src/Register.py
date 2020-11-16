@@ -15,14 +15,11 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 class RegisterWindow(BoxLayout):
-    print("RegisterWindow")
     tiUsername = ObjectProperty()
     tiEmail = ObjectProperty()
     tiPassword = ObjectProperty()
     tiConfirmPassword = ObjectProperty()
-    
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+
 
 
 class RegisterScreen(Screen):
@@ -34,7 +31,12 @@ class RegisterScreen(Screen):
             self.manager.transition = SlideTransition(direction="left")
             self.manager.current = "ProfileScreen"
 
-    #def switchToLogin(self):
+    # def textInputCheck(self):
+    #     if len(self.window.tiUsername.text) == 0 or len(self.window.tiPassword.text) == 0 or len(self.window.tiConfirmPassword.text == 0
+    #     or len(self.window.tiEmail.text) == 0 or self.window.tiPassword.text != self.window.tiConfirmPassword.text):
+    #         return False
+    #     return True
+
 
 
 
