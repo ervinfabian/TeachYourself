@@ -20,22 +20,21 @@ class RegisterWindow(BoxLayout):
     tiPassword = ObjectProperty()
     tiConfirmPassword = ObjectProperty()
 
+    def submitUser(self, app):
+        #a regisztralas ellenorzest az adatbazissal itt kell csinalni
+        if len(self.tiUsername.text) != 0 and len(self.tiPassword.text) != 0 and \
+        len(self.tiConfirmPassword.text) != 0 and len(self.tiEmail.text) != 0 and self.tiPassword.text == self.tiConfirmPassword.text:
+            app.switchScreenSelect()
+        print(False)
 
 
 class RegisterScreen(Screen):
     def __init__(self):
         super(RegisterScreen, self).__init__()
-    
-    def switchToProfile(self):
-        if self.manager.current == "RegisterScreen":
-            self.manager.transition = SlideTransition(direction="left")
-            self.manager.current = "ProfileScreen"
+
 
     # def textInputCheck(self):
-    #     if len(self.window.tiUsername.text) == 0 or len(self.window.tiPassword.text) == 0 or len(self.window.tiConfirmPassword.text == 0
-    #     or len(self.window.tiEmail.text) == 0 or self.window.tiPassword.text != self.window.tiConfirmPassword.text):
-    #         return False
-    #     return True
+
 
 
 

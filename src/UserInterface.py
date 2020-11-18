@@ -10,6 +10,7 @@ from Loading import LoadingScreen
 from Select import SelectScreen
 from Classes import ClassesScreen
 from Home import HomeScreen
+from Questions import QuestionsScreen
 from kivy.clock import Clock
 
 kv = Builder.load_file("windowmanager.kv")
@@ -24,6 +25,7 @@ class TeachYourselfApp(App):
         self.selectScreen = SelectScreen()
         self.classesScreen = ClassesScreen()
         self.homeScreen = HomeScreen()
+        self.questionsScreen = QuestionsScreen()
 
         self.screenManager.add_widget(self.loadingScreen)
         self.screenManager.add_widget(self.registerScreen)
@@ -31,6 +33,7 @@ class TeachYourselfApp(App):
         self.screenManager.add_widget(self.loginScreen)
         self.screenManager.add_widget(self.classesScreen)
         self.screenManager.add_widget(self.homeScreen)
+        self.screenManager.add_widget(self.questionsScreen)
 
         return self.screenManager
 
@@ -46,13 +49,17 @@ class TeachYourselfApp(App):
 
     def switchScreenHome(self):
         self.screenManager.switch_to(self.homeScreen)
-        # if self.homeScreen.textInputCheck():
-        #     self.screenManager.switch_to(self.homeScreen)
-    def switchScreenLogin(self,app):
+
+    def switchScreenClasses(self):
+        self.screenManager.switch_to(self.classesScreen)
+
+    def switchScreenQuestions(self):
+        self.screenManager.switch_to(self.classesScreen)
+
+    def switchScreenLogin(self, app):
         self.screenManager.switch_to(self.loginScreen)
 
     def on_start(self):
         if True:
             Clock.schedule_once(self.switchScreenLogin, 2)
-
 
