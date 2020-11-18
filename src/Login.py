@@ -9,32 +9,17 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-class MyLabel(Label):
-    def __init__(self, **kwargs):
-        Label.__init__(self, **kwargs)
-        self.register_event_type('on_double_press')
-        if kwargs.get("on_double_press") is not None:
-            self.bind(on_double_press=kwargs.get("on_double_press"))
-
-    def on_touch_down(self, touch):
-        if touch.is_double_tap:
-            self.dispatch('on_double_press', touch)
-            return True
-        return Label.on_touch_down(self, touch)
-
-    def on_double_press(self, *args):
-        pass
-
 class LoginWindow(BoxLayout):
     tiUsername = ObjectProperty()
     tiPassword = ObjectProperty()
 
+    def submitUser(self, app):
+        # a bejelentkezes ellenorzest az adatbazissal itt kell csinalni
+        if len(self.tiUsername.text) != 0 or len(self.tiPassword.text) != 0:
+            app.switchScreenSelect()
 
 class LoginScreen(Screen):
     pass
 
-class LoginWindowApp(App):
-    def build(self):
-        print("LoginWindowApp")
-        return LoginWindow()
+
 
