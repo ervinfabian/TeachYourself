@@ -1,4 +1,5 @@
 import sqlite3
+import class_database
 
 
 
@@ -20,6 +21,7 @@ sql = "INSERT INTO Questions(question,question_answer) VALUES ('Miert nem vagy M
 Cursor.execute(sql)
 """
 connection.commit()
+
 
 
 def show_questions():
