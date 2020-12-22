@@ -13,6 +13,11 @@ from kivy.properties import BooleanProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 
+
+#jelenleg ezek ugymond a tantargyak de lehet ezeknek is kell classt letrehozni
+classes = ['Calculus', 'Software Developing', 'Operating Systems']
+allClasses = ['Calculus', 'Software Developing', 'Operating Systems', 'Electromechanics']
+
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
                                  RecycleBoxLayout):
     ''' Adds selection and focus behaviour to the view. '''
@@ -40,16 +45,13 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
-        # if is_selected:
-        #     print("selection changed to {0}".format(rv.data[index]))
-        # else:
-        #     print("selection removed for {0}".format(rv.data[index]))
 
 
+#ezek a CLASSES osztalyok
 class ClassesList(RecycleView):
     def __init__(self, **kwargs):
         super(ClassesList, self).__init__(**kwargs)
-        self.data = [{'text': str(x)} for x in range(15)]
+        self.data = [{'text': x} for x in allClasses]
 
 class ClassesWindow(BoxLayout):
     pass

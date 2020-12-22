@@ -351,11 +351,27 @@
             font_size: 20
             background_color: 0,0,1,1
             size_hint: .2, .1
+            on_press: app.switchScreenQuestions(app)
     HomeList:
 
 <HomeScreen>:
     name: "Home_screen"
     HomeWindow:
+
+<AnswersList>:
+    orientation: "vertical"
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        spacing: 10
+        padding: 80
+        pos_hint: {'center_x': 0.5}
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
 
 <QuestionsWindow>:
     id: questions_window
@@ -367,6 +383,17 @@
             pos: self.pos
             size: self.size
             source: "images/batman.jpg"
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        orientation: "vertical"
+        Label:
+            text: root.question
+            bold: True
+            font_size: 32
+    AnswersList:
+
+
 
 <QuestionsScreen>:
     name: "Questions_screen"
