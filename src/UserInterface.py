@@ -13,9 +13,14 @@ from Home import HomeScreen
 from Questions import QuestionsScreen
 from kivy.clock import Clock
 
+#ebben van a GUI nagyreszt deklaralva
 kv = Builder.load_file("windowmanager.kv")
 
-
+#maga az app
+#a metodusait, attributumait az osztalyokban a App.get_running_app()
+#segitsegevel lehet elerni
+#a windowkra a screenek childrenjeikent lehet hivatkozni de kell indexelni a childreneket
+#exp: App.get_running_app().loginScreen.children[0] - ez a LoginWindow
 class TeachYourselfApp(App):
     def build(self):
         self.screenManager = ScreenManager()
@@ -37,11 +42,14 @@ class TeachYourselfApp(App):
 
         return self.screenManager
 
-
+    #ezek itt a screenvaltoztatgato metodusok
     def switchScreenSelect(self):
         self.screenManager.switch_to(self.selectScreen)
 
     def switchScreenLogin(self):
+        self.screenManager.switch_to(self.loginScreen)
+
+    def switchScreenLogin(self, app):
         self.screenManager.switch_to(self.loginScreen)
 
     def switchScreenRegister(self, app):
@@ -53,11 +61,8 @@ class TeachYourselfApp(App):
     def switchScreenClasses(self):
         self.screenManager.switch_to(self.classesScreen)
 
-    def switchScreenQuestions(self):
-        self.screenManager.switch_to(self.classesScreen)
-
-    def switchScreenLogin(self, app):
-        self.screenManager.switch_to(self.loginScreen)
+    def switchScreenQuestions(self, app):
+        self.screenManager.switch_to(self.questionsScreen)
 
     def on_start(self):
         if True:

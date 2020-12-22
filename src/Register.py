@@ -13,7 +13,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-
+#ezek a REGISTER osztalyok
 class RegisterWindow(BoxLayout):
     tiUsername = ObjectProperty()
     tiEmail = ObjectProperty()

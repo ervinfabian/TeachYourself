@@ -9,6 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+#ezek a LOGIN osztalyok
 class LoginWindow(BoxLayout):
     tiUsername = ObjectProperty()
     tiPassword = ObjectProperty()
@@ -16,7 +17,7 @@ class LoginWindow(BoxLayout):
     def submitUser(self, app):
         # a bejelentkezes ellenorzest az adatbazissal itt kell csinalni
         if len(self.tiUsername.text) != 0 or len(self.tiPassword.text) != 0:
-            app.switchScreenSelect()
+            app.switchScreenHome()
 
 class LoginScreen(Screen):
     pass
