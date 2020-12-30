@@ -1,159 +1,239 @@
 import sqlite3
 
 
+class Database():
+    def __init__(self):
+        self.connection = sqlite3.connect('database.db')
+        # get a cursor to execute sql statements
+        self.Cursor = self.connection.cursor()
+        # self.Cursor.execute(
+        #      'CREATE TABLE IF NOT EXISTS classes(class_name VARCHAR(100) PRIMARY KEY NOT NULL, username Varchar(100), FOREIGN KEY (username) REFERENCES members(users))')
+        #
+        # self.test1()
+        # self.test2()
+        self.counter = 0
+        self.classname = ''
+        self.all_classes = []
+        self.own_classes = []
+        self.Cursor.execute("Select class_name from classes")
+        rows = self.Cursor.fetchall()
+        for row in rows:
+            self.all_classes.append(row[0])
+        self.connection.commit()
+        print(self.all_classes)
 
-connection = sqlite3.connect('database.db')
+    def check_if_an_user_is_registered(self, name, password):
+        counter = 0
+        sqlite3.Cursor.execute("Select name from members where name = ? and password = ?", (name, password))
+        rows = sqlite3.Cursor.fetchall()
+        for row in rows:
+            counter += 1
+            # print(row)
 
-# get a cursor to execute sql statemants
-Cursor = connection.cursor()
-
-#Create a table
-
-Cursor.execute( '''CREATE TABLE IF NOT EXISTS members(member_id INTEGER PRIMARY KEY AUTOINCREMENT,NAME VARCHAR(100) NOT NULL, PASSWORD VARCHAR (100) NOT NULL,MAIL_ADDRESS VARCHAR(100) NOT NULL)''')
-
-#sql = "INSERT INTO teszt (NAME,USERNAME) VALUES ('Maci','huba11')"
-#sql = "Delete FROM teszt WHERE PID='7'"
-##connection.commit()
-
-
-def check_if_an_user_is_registrated():
-    counter=0
-    print('Hello we are the TeachYourself team, please login!')
-    print('Name:')
-    myname = input()
-    print('Password:')
-    mypass = input()
-
-    Cursor.execute("Select name from members where name = ? and password = ?", (myname,mypass))
-    rows = Cursor.fetchall()
-    for row in rows:
-        counter+=1
-       #print(row)
-    if counter>0 :
-        print("Welcome back!")
-    else:
-
-        print('To use our application first you should register first! Type yes to registrate now or yes to do it later!')
-        registrate_status=input()
-        if registrate_status == 'yes':
-            registrate_a_new_member()
+        if counter > 0:
+            print("Welcome back!")
         else:
-            print("Have a nice day and come back later!")
-            return 0
+            print(
+                'To use our application first you should register first! Type yes to registrate now or yes to do it later!')
+            register_status = input()
+            if register_status == 'yes':
+                self.register_a_new_member(name, password)
+            else:
+                print("Have a nice day and come back later!")
+                return 0
 
+    def register_a_new_member(self, future_member_name, future_member_password, future_member_mail):
+        future_member_pid = self.the_size_of_database() + 1
+        self.Cursor.execute('INSERT INTO members(member_id, NAME, PASSWORD,MAIL_ADDRESS) VALUES (?,?,?,?) ',
+                            (future_member_pid, future_member_name, future_member_password, future_member_mail))
+        print('Data entered successfully.')
+        self.connection.commit()
 
+    def the_size_of_database(self):
+        count = 0
+        self.Cursor.execute("Select member_id,name,password from members")
+        rows = self.Cursor.fetchall()
+        for row in rows:
+            count += 1
+            print(row)
 
+        return count
 
-def registrate_a_new_member():
-    print('Hello! Now the first step is to give us your name!')
-    future_member_name = input()
-    print('Hey '+ future_member_name+' second step is to give us your password!')
-    future_member_password = input()
-    future_member_pid = the_size_of_database() + 1
-    print('At last but not least, please give us your mail address to keep in touch!')
-    future_member_mail=input()
-    Cursor.execute("""INSERT INTO members(member_id, NAME, PASSWORD,MAIL_ADDRESS) VALUES (?,?,?,?) """, (future_member_pid, future_member_name, future_member_password,future_member_mail))
-    print('Data entered successfully.')
-    connection.commit()
+    ###################################################Class###############################################################
+    # Create a table teszt
+    def test1(self):
 
-def the_size_of_database():
-    count = 0
-    Cursor.execute("Select member_id,name,password from members ")
-    rows = Cursor.fetchall()
-    for row in rows:
-        count += 1
-        print(row)
+        #self.connection.commit()
 
-    return count
+        sql = "INSERT INTO classes(class_name) VALUES ('Calculus')"
+        self.Cursor.execute(sql)
+        sql = "INSERT INTO classes(class_name) VALUES ('Software development')"
+        self.Cursor.execute(sql)
+        sql = "INSERT INTO classes(class_name) VALUES ('Operating system1')"
+        self.Cursor.execute(sql)
+        sql = "INSERT INTO classes(class_name) VALUES ('World Literature')"
+        self.Cursor.execute(sql)
 
-###################################################Class###############################################################
-#Create a table teszt
-Cursor.execute( '''CREATE TABLE IF NOT EXISTS Classes(CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT,CLASS_NAME VARCHAR(100) NOT NULL,CLASS_THEMATIC VARCHAR (100) NOT NULL,member_id INTEGER, FOREIGN KEY (member_id) REFERENCES members(member_id))''')
+        self.connection.commit()
 
-###connection.commit()
+    def register_a_new_class(self, future_class_name, future_class_thematic):
+        self.Cursor.execute("""INSERT INTO Classes( CLASS_NAME, CLASS_THEMATIC) VALUES (?,?) """,
+                            (future_class_name, future_class_thematic))
+        print('Data entered successfully.')
+        self.connection.commit()
 
+    def show_our_database(self):
+        self.Cursor.execute("Select class_id,class_name,class_thematic from Classes order by class_thematic")
+        rows = self.Cursor.fetchall()
+        for row in rows:
+            print(row)
 
-##sql = "INSERT INTO Classes(CLASS_NAME,CLASS_THEMATIC) VALUES ('Szamtech3','Phyton')"
-##Cursor.execute(sql)
-##sql = "INSERT INTO Classes(CLASS_NAME,CLASS_THEMATIC) VALUES ('Szamtech3','Numerikus')"
-##Cursor.execute(sql)
-##sql = "INSERT INTO Classes(CLASS_NAME,CLASS_THEMATIC) VALUES ('Szamtech3','Oprendszerek1')"
-##Cursor.execute(sql)
-##connection.commit()
-
-
-def registrate_a_new_Class():
-    print("Give us the name of the Class you would like to create: ")
-    future_class_name = input()
-    print('Now what is the thematic of the '+future_class_name+' named class! This select it below!')
-    future_class_thematic = input()
-    Cursor.execute("""INSERT INTO Classes( CLASS_NAME, CLASS_THEMATIC) VALUES (?,?) """, (future_class_name, future_class_thematic))
-    print('Data entered successfully.')
-    connection.commit()
-
-
-def show_our_database():
-    Cursor.execute("Select class_id,class_name,class_thematic from Classes order by class_thematic")
-    rows = Cursor.fetchall()
-    for row in rows:
-        print(row)
-
-def search_a_class_by_its_name():
-    counter=0
-    print("Type the name of the Class you are searching for!")
-    class_tehem_example=input()
-    Cursor.execute("Select class_id,class_name,class_thematic from Classes where class_thematic = ?",(class_tehem_example,))
-    rows = Cursor.fetchall()
-    for row in rows:
-        counter=counter+1
-        print(row)
-    if counter ==0:
-        print("There is no class with this thematic! Would like to create one? If you want type yes!")
-    answer=input()
-    if answer == "yes":
-        registrate_a_new_Class()
-    else:
+    def search_a_class_by_its_name(self, class_example):
+        counter = 0
+        self.Cursor.execute("Select class_id,class_name,class_thematic from Classes where class_thematic = ?",
+                            (class_example,))
+        rows = self.Cursor.fetchall()
+        for row in rows:
+            counter = counter + 1
+            print(row)
+        if counter == 0:
+            print("There is no class with this thematic! Would like to create one? If you want type yes!")
+        answer = input()
+        if answer == "yes":
+            self.register_a_new_class()
         return 0
 
+    ###################################################Question###############################################################
 
+    def test2(self):
 
+        # Create a table teszt
+        self.Cursor.execute(
+            'CREATE TABLE questions(question VARCHAR(1000) PRIMARY KEY NOT NULL,question_correct_answer VARCHAR(5000) NOT NULL, class_name VARCHAR(100) NOT NULL, FOREIGN KEY (class_name) REFERENCES classes(class_name))')
 
-###################################################Question###############################################################
+        sql = "INSERT INTO questions(question, question_correct_answer, class_name) VALUES ('Firstc?','Igen', 'Calculus')"
+        self.Cursor.execute(sql)
 
-#Create a table teszt
-Cursor.execute( '''CREATE TABLE Questions(Question_ID INTEGER PRIMARY KEY AUTOINCREMENT,Question VARCHAR(1000),Question_answer VARCHAR(5000),CLS_ID INTEGER, FOREIGN KEY (CLS_ID) REFERENCES Classes(CLASS_ID))''')
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Secondc?','Nem', 'Calculus')"
+        self.Cursor.execute(sql)
 
-"""
-sql = "INSERT INTO Questions(question,question_answer) VALUES ('Hany eves vagy?','Ma 18 holnaputan 22.')"
-Cursor.execute(sql)
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Thirdc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
-sql = "INSERT INTO Questions(question,question_answer) VALUES ('Hogy hivnak?','Tibor vagyok, orvendek.')"
-Cursor.execute(sql)
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fourthc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
-sql = "INSERT INTO Questions(question,question_answer) VALUES ('Miert nem vagy Monacoban?','Megbuktam tortenelembol.')"
-Cursor.execute(sql)
-"""
-connection.commit()
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fifthc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
-def show_questions():
-    Cursor.execute("Select * from Questions")
-    rows = Cursor.fetchall()
-    for row in rows:
-        print(row)
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Sixthc?','Igen','Calculus')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Seventhc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Eighthc?','Igen','Calculus')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Ninthc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Tenthc?','Nem','Calculus')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO questions(question, question_correct_answer, class_name) VALUES ('Firsto?','Igen', 'Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Secondo?','Nem', 'Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Thirdo?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fourtho?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fiftho?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Sixtho?','Igen','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Seventho?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Eightho?','Igen','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Nintho?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Tentho?','Nem','Operating system1')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO questions(question, question_correct_answer, class_name) VALUES ('Firsts?','Igen', 'Software development')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Seconds?','Nem', 'Software development')"
+        self.Cursor.execute(sql)
 
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Thirds?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fourths?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fifths?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Sixths?','Igen','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Sevenths?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Eighths?','Igen','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Ninths?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Tenths?','Nem','Software development')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO questions(question, question_correct_answer, class_name) VALUES ('Firstw?','Igen', 'World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Secondw?','Nem', 'World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Thirdw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fourthw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Fifthw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Sixthw?','Igen','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Seventhw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Eighthw?','Igen','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Ninthw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+
+        sql = "INSERT INTO Questions(question, question_correct_answer, class_name) VALUES ('Tenthw?','Nem','World Literature')"
+        self.Cursor.execute(sql)
+        self.connection.commit()
+
+    def show_questions(self):
+        self.Cursor.execute("Select * from Questions")
+        rows = self.Cursor.fetchall()
+        for row in rows:
+            print(row)
