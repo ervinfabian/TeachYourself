@@ -7,13 +7,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.recycleview import RecycleView
-import Classes
 
 #ezek a HOME osztalyok
 class HomeList(RecycleView):
     def __init__(self, **kwargs):
         super(HomeList, self).__init__(**kwargs)
-        self.data = [{'text': x} for x in Classes.classes]
+        self.data = [{'text': x} for x in App.get_running_app().db.all_classes]
 
 class HomeWindow(BoxLayout):
     pass
