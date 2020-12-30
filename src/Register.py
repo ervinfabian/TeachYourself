@@ -1,11 +1,3 @@
-from typing import Any
-import kivy
-from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
-from kivy.core.image import Image
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -13,7 +5,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-
+#ezek a REGISTER osztalyok
 class RegisterWindow(BoxLayout):
     tiUsername = ObjectProperty()
     tiEmail = ObjectProperty()
@@ -22,8 +14,15 @@ class RegisterWindow(BoxLayout):
 
     def submitUser(self, app):
         #a regisztralas ellenorzest az adatbazissal itt kell csinalni
+        sql = 'Select name from members where name = ?'
+        counter = 0
+        rows = App.get_running_app().db.Cursor.execute('Select username from members where username = ?', (self.tiUsername.text,)).fetchall()
+        for row in rows:
+            counter = counter + 1
         if len(self.tiUsername.text) != 0 and len(self.tiPassword.text) != 0 and \
-        len(self.tiConfirmPassword.text) != 0 and len(self.tiEmail.text) != 0 and self.tiPassword.text == self.tiConfirmPassword.text:
+        len(self.tiConfirmPassword.text) != 0 and len(self.tiEmail.text) != 0 and self.tiPassword.text == self.tiConfirmPassword.text and counter != 1:
+            App.get_running_app().db.Cursor.execute('INSERT INTO members (username, email, password) VALUES (?,?,?)', (self.tiUsername.text, self.tiEmail.text, self.tiPassword.text))
+            App.get_running_app().db.connection.commit()
             app.switchScreenSelect()
         print(False)
 
