@@ -69,6 +69,8 @@ class TeachYourselfApp(App):
     def switchScreenResult(self):
         self.screenManager.switch_to(self.resultScreen)
 
+    def exit(self, app):
+        self.stop()
 
     def on_start(self):
         if True:

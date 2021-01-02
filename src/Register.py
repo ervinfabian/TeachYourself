@@ -13,8 +13,6 @@ class RegisterWindow(BoxLayout):
     tiConfirmPassword = ObjectProperty()
 
     def submitUser(self, app):
-        #a regisztralas ellenorzest az adatbazissal itt kell csinalni
-        sql = 'Select name from members where name = ?'
         counter = 0
         rows = App.get_running_app().db.Cursor.execute('Select username from members where username = ?', (self.tiUsername.text,)).fetchall()
         for row in rows:

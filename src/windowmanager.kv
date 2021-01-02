@@ -33,7 +33,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/happy.jpg"
     BoxLayout:
         size_hint_y: None
         height: "40dp"
@@ -113,7 +113,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/happy.jpg"
     BoxLayout:
         size_hint_y: None
         height: "40dp"
@@ -178,7 +178,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/happy.jpg"
     BoxLayout:
         orientation: "vertical"
         size_hint_y: 0.2
@@ -228,7 +228,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/happy.jpg"
     BoxLayout:
         orientation: "vertical"
         size_hint_y: None
@@ -261,7 +261,7 @@
             size_hint_y: None
             height: "40dp"
             Label:
-                text: "Contact us at: 937636703694"
+                text: "Contact us at: +40764 756 384"
                 font_size: 12
 
 <LoadingScreen>:
@@ -295,7 +295,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/happy.jpg"
     BoxLayout:
         size_hint_y: None
         height: "20dp"
@@ -342,7 +342,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/blue.png"
     BoxLayout:
         size_hint_y: None
         height: "20dp"
@@ -384,7 +384,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/blue.png"
     BoxLayout:
         size_hint_y: None
         height: "40dp"
@@ -410,7 +410,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/batman.jpg"
+            source: "images/blue.png"
     BoxLayout:
         orientation: "vertical"
         Label:
@@ -430,6 +430,15 @@
             background_color: 0,0,1,1
             size_hint: .2, .1
             on_press: app.switchScreenHome(app)
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            pos_hint: {'center_x': 0.5}
+            text: "Exit"
+            font_size: 20
+            background_color: 0,0,1,1
+            size_hint: .2, .1
+            on_press: app.exit(app)
 
 <ResultScreen>:
     name: "Result_screen"

@@ -6,11 +6,6 @@ class Database():
         self.connection = sqlite3.connect('database.db')
         # get a cursor to execute sql statements
         self.Cursor = self.connection.cursor()
-        # self.Cursor.execute(
-        #      'CREATE TABLE IF NOT EXISTS classes(class_name VARCHAR(100) PRIMARY KEY NOT NULL, username Varchar(100), FOREIGN KEY (username) REFERENCES members(users))')
-        #
-        # self.test1()
-        # self.test2()
         self.counter = 0
         self.classname = ''
         self.all_classes = []
